@@ -1,0 +1,149 @@
+<!-- <!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Payment Page with QR Code Generator</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script type="text/javascript" src="../jsFiles/jquery.min.js"></script>
+        <script type="text/javascript" src="../jsFiles/qrcode.js"></script>
+    </head>
+    <body class="justify-center pt-8">
+        <div
+            class="mx-auto shadow-2xl w-5/6 flex-col justify-center text-center items-center p-8"
+        >
+            <h1 class="text-orange-500 text-2xl my-4">
+                Order Id: 0980sda98fs0
+            </h1>
+            <h1 class="text-black">We Accept</h1>
+            <img
+                class="h-12 w-auto mx-auto my-8"
+                src="https://login.fonepay.com/assets/img/fonepay_payments_fatafat.png"
+                alt="Fone Pay"
+            />
+            <h1 class="text-orange-500 text-3xl my-4">Nrs. 500</h1>
+            <p>
+                Dispense will start automatically after successful payment, it
+                may take time to reflect payment status. Please wait for at
+                least 1 minute after successful payment
+            </p>
+            <img
+                src="../assets/Gamepad.png"
+                alt="QR Code"
+                class="w-5/6 mx-auto my-8"
+            />
+        </div>
+    </body>
+</html> -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Payment Page with QR Code Generator</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script type="text/javascript" src="../jsFiles/jquery.min.js"></script>
+        <script type="text/javascript" src="../jsFiles/qrcode.js"></script>
+    </head>
+    <body class="bg-gray-100 flex justify-center items-center h-screen">
+        <div
+            class="mx-auto shadow-2xl w-5/6 flex-col justify-center text-center items-center p-8"
+        >
+            <h1 class="text-orange-500 text-2xl my-4">
+                Order Id: 0980sda98fs0
+            </h1>
+            <h1 class="text-black">We Accept</h1>
+            <img
+                class="h-12 w-auto mx-auto my-8"
+                src="https://login.fonepay.com/assets/img/fonepay_payments_fatafat.png"
+                alt="Fone Pay"
+            />
+            <h1 class="text-orange-500 text-3xl my-4">Nrs. 500</h1>
+            <p>
+                Dispense will start automatically after successful payment, it
+                may take time to reflect payment status. Please wait for at
+                least 1 minute after successful payment
+            </p>
+            <!-- <img
+                src="../assets/Gamepad.png"
+                alt="QR Code"
+                class="w-5/6 mx-auto my-8"
+            /> -->
+            <div id="qrCodeImage" class="w-5/6 mx-auto my-8"></div>
+        </div>
+
+        <script>
+            // Function to initiate the payment request
+            fetch("http://localhost:8001/api/v1/carts/payment/initiate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    amount: 0.1,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    document
+                        .getElementById("qrContainer")
+                        .classList.remove("hidden");
+                    document.getElementById("prn").innerText =
+                        `Order ID: ${data.prn}`;
+
+                    // Generate QR Code and display it using the received data.qrMessage
+                    const qrcode = new QRCode(
+                        document.getElementById("qrCodeImage"),
+                        {
+                            width: 420,
+                            height: 420,
+                        },
+                    );
+                    qrcode.makeCode(data.qrMessage);
+
+                    // Open a WebSocket connection
+                    const ws = new WebSocket(data.wsUrl);
+
+                    ws.onmessage = (event) => {
+                        const jsonData = JSON.parse(event.data);
+                        console.log("Payment status:", jsonData);
+                        alert("Payment status: " + JSON.stringify(jsonData));
+                    };
+
+                    ws.onerror = (error) => {
+                        console.error("WebSocket error:", error);
+                    };
+
+                    ws.onclose = () => {
+                        console.log("WebSocket connection closed");
+                    };
+                })
+                .catch((error) => {
+                    console.error("Error:", error.message);
+                    alert("Error initiating payment.");
+                });
+        </script>
+
+        <script type="text/javascript">
+            // Optional: Local QR code generation based on user input (if required)
+            // var qrcode = new QRCode(document.getElementById("qrCodeImage"), {
+            //     width: 420,
+            //     height: 420,
+            // });
+
+            function makeCode() {
+                var elText = document.getElementById("text");
+                if (!elText.value) {
+                    alert("Input a text");
+                    elText.focus();
+                    return;
+                }
+                qrcode.makeCode(elText.value);
+            }
+
+            makeCode();
+        </script>
+    </body>
+</html>

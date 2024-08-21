@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Vending Machine.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vending Machine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-white min-h-screen">
+      <div class="absolute text-center w-full top-[20px] hidden" id="undo">
+      <div class="rounded-md px-4 py-2 bg-blue-300 w-4" onclick="undoDelete()">Undo</div>
+    </div>
+        <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+                <a href="productBox.html" class="mx-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left">
+                        <path d="M6 8L2 12L6 16"/><path d="M2 12H22"/>
+                    </svg>
+                </a>
+            <h2 class="text-2xl font-extrabold font-mono tracking-tight text-gray-900 mb-8">Shopping cart</h2>
+
+            <div class="mt-8">
+                <div class="flow-root">
+                    <ul id="cart-items" role="list" class="-my-6 divide-y divide-gray-200">
+                        <!-- Cart items will be dynamically inserted here -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div class="flex justify-between text-base font-medium text-gray-900">
+                    <p>Subtotal</p>
+                    <p id="subtotal">Rs. 0</p>
+                </div>
+                <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                <div class="mt-6">
+                    <a href="#checkout" onclick="checkout()" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                        Checkout
+                    </a>
+                </div>
+                <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                    <p>
+                        <a href="productBox.html" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
+                            Continue Shopping <span aria-hidden="true"> &rarr;</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cartScript.js"></script>
+</body>
+</html>

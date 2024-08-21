@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast Notification</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .toast {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+
+    <!-- Button to trigger toast -->
+    <button id="show-toast" class="bg-blue-500 text-white px-4 py-2 rounded">Show Toast</button>
+
+    <!-- Toast container -->
+    <div id="toast" class="toast fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+        This is a toast message!
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keypad</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .visibility-none {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-6 rounded shadow-md w-80">
+    <input id="inputBar" type="text" class="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+    <button id="openKeypad" class="bg-green-500 text-white py-2 px-4 rounded-full w-full">Open Keypad</button>
+  </div>
+
+  <div id="keypadModal" class="fixed inset-x-0 bottom-0 bg-white p-6 rounded-t-lg shadow-lg transform translate-y-full transition-transform duration-300 flex justify-center">
+    <div class="w-96">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Keypad</h3>
+        <button id="closeKeypad" class="text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <!-- Keypad buttons will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const keypadContainer = document.querySelector('#keypadModal .grid');
+      const inputBar = document.getElementById('inputBar');
+      const keypadModal = document.getElementById('keypadModal');
+      const openKeypadButton = document.getElementById('openKeypad');
+      const closeKeypadButton = document.getElementById('closeKeypad');
+
+      // Show the keypad modal
+      openKeypadButton.onclick = () => {
+        keypadModal.classList.remove('translate-y-full');
+        keypadModal.classList.add('translate-y-0');
+      };
+
+      // Hide the keypad modal
+      closeKeypadButton.onclick = () => {
+        keypadModal.classList.remove('translate-y-0');
+        keypadModal.classList.add('translate-y-full');
+      };
+
+      // Create buttons for the keypad
+      for (let i = 1; i <= 9; i++) {
+        createButton(i);
+      }
+      createButton(''); // Placeholder for alignment
+      createButton(0);
+      createDeleteButton(); // Add delete button
+
+      function createButton(number) {
+        const button = document.createElement('button');
+        button.className = 'bg-blue-500 text-white py-2 px-4 rounded-full text-xl h-16 w-16 flex items-center justify-center';
+        if (number === "") {
+          button.classList.add("visibility-none");
+        }
+        button.textContent = number;
+        button.onclick = () => {
+          if (number !== '') {
+            inputBar.value += number;
+          }
+        };
+        keypadContainer.appendChild(button);
+      }
+
+      function createDeleteButton() {
+        const button = document.createElement('button');
+        button.className = 'bg-red-500 text-white py-2 px-4 rounded-full text-xl h-16 w-16 flex items-center justify-center';
+        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>`;
+        button.onclick = () => {
+          inputBar.value = inputBar.value.slice(0, -1);
+        };
+        keypadContainer.appendChild(button);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+<!-- `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>`; -->

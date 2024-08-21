@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vending Machine</title>
+  <!-- Favicon -->
+  <link rel="icon" href="assets/VendingMachine.png" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="">
+  <nav class="flex w-full justify-between bg-gray-200 p-4 mb-8 px-6 items-center">
+    <a href="productBox.html" class="flex items-center font-bold text-2xl">
+      <img src="assets/VendingMachine.png" alt="" />
+      <h1>Vending</h1>
+    </a>
+    <a href="cart2Dummy.html">
+      <img src="assets/Cart.png" alt="Cart" class="w-8 h-8">
+    </a>
+  </nav>
+
+  <!-- <div id="toast"></div> -->
+
+  <!-- Product Categories -->
+  <div id="category-buttons"
+  class=" mb-4 pb-4 mx-8 flex gap-3 overflow-x-auto whitespace-nowrap scrollbar-thin">
+    <!-- Category buttons will be dynamically inserted here -->
+  </div>
+
+  <div class="bg-white items-center justify-center">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div id="product-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-16">
+        <!-- Product cards will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+  <audio id="add-to-cart-sound" src="assets/ting.mp3" preload="auto"></audio>
+  <div class="fixed bottom-4 right-4 rounded-full p-3 bg-orange-400 cursor-pointer" onclick="openKeypad()">
+    <img src="assets/keyPad.png" alt="Key" class="h-8 w-8">
+  </div>
+
+  <div class="bg-white p-6 rounded shadow-md w-80 hidden">
+    <input id="inputBar" type="text" class="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+    <div class="grid grid-cols-3 gap-4">
+      <!-- Keypad buttons will be inserted here by JavaScript -->
+    </div>
+  </div>
+
+  <script src="scriptDummy.js"></script>
+</body>
+</html>
